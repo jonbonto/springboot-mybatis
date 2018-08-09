@@ -1,3 +1,6 @@
+// const server = "http://localhost:8080"
+const server = "https://springboot-mybatis.herokuapp.com";
+
 new Vue({
   el: '#app',
   data: {
@@ -35,11 +38,11 @@ new Vue({
       };
 
       try {
-        const resAdd = await fetch('http://localhost:8080/api/employees', {
+        const resAdd = await fetch(server + '/api/employees', {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-          }, method: "POST", body: JSON.stringify(person)
+          }, method: "POST", body: JSON.stringify(person), mode: "no-cors"
         });
 
         if (resAdd.status === 200) {
@@ -89,11 +92,11 @@ new Vue({
       };
 
       try {
-        const resEdit = await fetch('http://localhost:8080/api/employees/' + person.id, {
+        const resEdit = await fetch(server + '/api/employees/' + person.id, {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-          }, method: "POST", body: JSON.stringify(person)
+          }, method: "POST", body: JSON.stringify(person), mode: "no-cors"
         });
 
         if (resEdit.status === 200) {
@@ -116,11 +119,11 @@ new Vue({
       // console.log(this.bin[index]);
       let person = this.bin[index];
       try {
-        await fetch('http://localhost:8080/api/employees/' + person.id, {
+        await fetch(server + '/api/employees/' + person.id, {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-          }, method: "DELETE"
+          }, method: "DELETE", mode: "no-cors"
         });
       this.bin.splice(index, 1);
       } catch(e) {
@@ -129,7 +132,7 @@ new Vue({
     },
     fetchPersons: async function(){
       try {
-        const response = await fetch('http://localhost:8080/api/employees');
+        const response = await fetch(server + '/api/employees', {mode: "no-cors"});
         this.persons = await response.json();
         this.persons = this.persons.map(person => ({ ...person, lname: person.lastName, fname: person.firstName }));
       } catch (e) {
